@@ -37,22 +37,32 @@ const NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", 
 
 // 3. Start Tuner
 startBtn.onclick = async () => {
-    // Resume AudioContext if it exists (for browser security)
-    if (audioContext && audioContext.state === 'suspended') {
-        await audioContext.resume();
-        return;
-    }
-
-    if (audioContext) {
-        location.reload();
-        return;
-    }
-
     try {
-        // Request microphone access first
-        micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        // Essential for Mobile: AudioContext MUST be created/resumed inside a click event
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
 
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioContext.state === 'suspended') {
+            await audioContext.resume();
+        }
+
+        // If already listening, this button acts as a reset
+        if (micStream) {
+            location.reload();
+            return;
+        }
+
+        startBtn.textContent = "TRAŽIM DOZVOLU...";
+
+        // Request microphone access
+        micStream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+                echoCancellation: false,
+                noiseSuppression: false,
+                autoGainControl: false
+            }
+        });
 
         startBtn.textContent = "SLUŠAM...";
         startBtn.style.opacity = "0.5";
