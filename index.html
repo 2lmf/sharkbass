@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SharkTuner | Professional Guitar Tools</title>
+    <link rel="stylesheet" href="style.css?v=1.0">
+    <link rel="manifest" href="manifest.json?v=1.0">
+    <meta name="theme-color" content="#0a0a0c">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+
+<body>
+    <div class="glass-bg"></div>
+
+    <header>
+        <div class="header-content">
+            <h1>SHARK<span>TUNER</span></h1>
+            <div class="status-indicator" id="audio-status"></div>
+        </div>
+    </header>
+
+    <main id="app-container">
+        <!-- View: Tuner (Default) -->
+        <section id="view-tuner" class="view active">
+            <div class="tuner-container">
+                <div class="note-display">
+                    <span id="target-note">--</span>
+                    <span id="cents-offset">0.0</span>
+                </div>
+
+                <div class="gauge-container">
+                    <div class="gauge-tracks"></div>
+                    <div id="needle" class="needle"></div>
+                    <div class="center-dot"></div>
+                </div>
+
+                <div class="tuner-actions">
+                    <button id="btn-start-tuner" class="btn-primary">POKRENI ŠTIMER</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Chords (Placeholder) -->
+        <section id="view-chords" class="view">
+            <div class="section-header">
+                <h2>Akordi</h2>
+                <p>Uskoro: Interaktivna knjižnica akorda</p>
+            </div>
+        </section>
+
+        <!-- View: Scales (Placeholder) -->
+        <section id="view-scales" class="view">
+            <div class="section-header">
+                <h2>Ljestvice</h2>
+                <p>Uskoro: Vizualni vodič kroz ljestvice</p>
+            </div>
+        </section>
+    </main>
+
+    <nav class="tab-bar">
+        <button class="tab-btn active" data-view="tuner">
+            <span class="icon">🎯</span>
+            <span class="label">Štimer</span>
+        </button>
+        <button class="tab-btn" data-view="chords">
+            <span class="icon">🎸</span>
+            <span class="label">Akordi</span>
+        </button>
+        <button class="tab-btn" data-view="scales">
+            <span class="icon">📐</span>
+            <span class="label">Ljestvice</span>
+        </button>
+    </nav>
+
+    <script src="https://esm.sh/pitchy@4"></script>
+    <script src="app.js?v=1.0"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js?v=1.0');
+        }
+    </script>
+</body>
+
+</html>
