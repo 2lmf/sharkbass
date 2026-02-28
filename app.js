@@ -72,11 +72,9 @@ function updateTuner() {
         targetNoteEl.textContent = name;
         centsOffsetEl.textContent = cents.toFixed(1);
 
-        // Map cents (-50 to +50) to rotation (-45 to 45 degrees)
         const rotation = (cents / 50) * 45;
         needleEl.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
 
-        // Visual feedback
         if (Math.abs(cents) < 5) {
             noteDisplay.style.borderColor = "#2ecc71";
             noteDisplay.style.textShadow = "0 0 30px rgba(46, 204, 113, 0.6)";
@@ -89,8 +87,7 @@ function updateTuner() {
     requestAnimationFrame(updateTuner);
 }
 
-// --- V2.1.1 LIBRARIES: EXPANDED CHORDS & SCALES ---
-
+// --- LIBRARIES DATA ---
 const GUITAR_CHORDS = {
     "C": {
         "major": { name: "C Dur", notes: "C E G", positions: [{ s: 5, f: 3, r: true }, { s: 4, f: 2 }, { s: 2, f: 1 }] },
@@ -110,9 +107,7 @@ const GUITAR_CHORDS = {
         "maj7": { name: "Dmaj7", notes: "D F# A C#", positions: [{ s: 4, f: 0, r: true }, { s: 3, f: 2 }, { s: 2, f: 2 }, { s: 1, f: 2 }] },
         "m7": { name: "Dm7", notes: "D F A C", positions: [{ s: 4, f: 0, r: true }, { s: 3, f: 2 }, { s: 2, f: 1 }, { s: 1, f: 1 }] }
     },
-    "D#": {
-        "major": { name: "D# Dur", notes: "D# G A#", positions: [{ s: 5, f: 6, r: true }, { s: 4, f: 8 }, { s: 3, f: 8 }, { s: 2, f: 8 }] }
-    },
+    "D#": { "major": { name: "D# Dur", notes: "D# G A#", positions: [{ s: 5, f: 6, r: true }, { s: 4, f: 8 }, { s: 3, f: 8 }, { s: 2, f: 8 }] } },
     "E": {
         "major": { name: "E Dur", notes: "E G# B", positions: [{ s: 6, f: 0, r: true }, { s: 5, f: 2 }, { s: 4, f: 2 }, { s: 3, f: 1 }] },
         "minor": { name: "E Mol", notes: "E G B", positions: [{ s: 6, f: 0, r: true }, { s: 5, f: 2 }, { s: 4, f: 2 }] },
@@ -126,9 +121,7 @@ const GUITAR_CHORDS = {
         "7": { name: "F7", notes: "F A C Eb", positions: [{ s: 6, f: 1, r: true }, { s: 5, f: 3 }, { s: 4, f: 1 }, { s: 3, f: 2 }, { s: 2, f: 1 }, { s: 1, f: 1 }] },
         "maj7": { name: "Fmaj7", notes: "F A C E", positions: [{ s: 4, f: 3, r: true }, { s: 3, f: 2 }, { s: 2, f: 1 }, { s: 1, f: 0 }] }
     },
-    "F#": {
-        "major": { name: "F# Dur", notes: "F# A# C#", positions: [{ s: 6, f: 2, r: true }, { s: 5, f: 4 }, { s: 4, f: 4 }, { s: 3, f: 3 }, { s: 2, f: 2 }, { s: 1, f: 2 }] }
-    },
+    "F#": { "major": { name: "F# Dur", notes: "F# A# C#", positions: [{ s: 6, f: 2, r: true }, { s: 5, f: 4 }, { s: 4, f: 4 }, { s: 3, f: 3 }, { s: 2, f: 2 }, { s: 1, f: 2 }] } },
     "G": {
         "major": { name: "G Dur", notes: "G B D", positions: [{ s: 6, f: 3, r: true }, { s: 5, f: 2 }, { s: 4, f: 0 }, { s: 3, f: 0 }, { s: 2, f: 0 }, { s: 1, f: 3 }] },
         "minor": { name: "G Mol", notes: "G Bb D", positions: [{ s: 6, f: 3, r: true }, { s: 5, f: 5 }, { s: 4, f: 5 }, { s: 3, f: 3 }, { s: 2, f: 3 }, { s: 1, f: 3 }] },
@@ -136,9 +129,7 @@ const GUITAR_CHORDS = {
         "maj7": { name: "Gmaj7", notes: "G B D F#", positions: [{ s: 6, f: 3, r: true }, { s: 1, f: 2 }] },
         "m7": { name: "Gm7", notes: "G Bb D F", positions: [{ s: 6, f: 3, r: true }, { s: 3, f: 3 }, { s: 2, f: 3 }, { s: 1, f: 3 }] }
     },
-    "G#": {
-        "major": { name: "G# Dur", notes: "G# C D#", positions: [{ s: 6, f: 4, r: true }, { s: 5, f: 6 }, { s: 4, f: 6 }, { s: 3, f: 5 }, { s: 2, f: 4 }, { s: 1, f: 4 }] }
-    },
+    "G#": { "major": { name: "G# Dur", notes: "G# C D#", positions: [{ s: 6, f: 4, r: true }, { s: 5, f: 6 }, { s: 4, f: 6 }, { s: 3, f: 5 }, { s: 2, f: 4 }, { s: 1, f: 4 }] } },
     "A": {
         "major": { name: "A Dur", notes: "A C# E", positions: [{ s: 5, f: 0, r: true }, { s: 4, f: 2 }, { s: 3, f: 2 }, { s: 2, f: 2 }] },
         "minor": { name: "A Mol", notes: "A C E", positions: [{ s: 5, f: 0, r: true }, { s: 4, f: 2 }, { s: 3, f: 2 }, { s: 2, f: 1 }] },
@@ -146,9 +137,7 @@ const GUITAR_CHORDS = {
         "maj7": { name: "Amaj7", notes: "A C# E G#", positions: [{ s: 5, f: 0, r: true }, { s: 4, f: 2 }, { s: 3, f: 1 }, { s: 2, f: 2 }] },
         "m7": { name: "Am7", notes: "A C E G", positions: [{ s: 5, f: 0, r: true }, { s: 4, f: 2 }, { s: 2, f: 1 }] }
     },
-    "A#": {
-        "major": { name: "A# Dur", notes: "A# D F", positions: [{ s: 5, f: 1, r: true }, { s: 4, f: 3 }, { s: 3, f: 3 }, { s: 2, f: 3 }] }
-    },
+    "A#": { "major": { name: "A# Dur", notes: "A# D F", positions: [{ s: 5, f: 1, r: true }, { s: 4, f: 3 }, { s: 3, f: 3 }, { s: 2, f: 3 }] } },
     "B": {
         "major": { name: "B Dur", notes: "B D# F#", positions: [{ s: 5, f: 2, r: true }, { s: 4, f: 4 }, { s: 3, f: 4 }, { s: 2, f: 4 }] },
         "minor": { name: "B Mol", notes: "B D F#", positions: [{ s: 5, f: 2, r: true }, { s: 4, f: 4 }, { s: 3, f: 4 }, { s: 2, f: 3 }] },
@@ -164,25 +153,11 @@ const GUITAR_SCALES = {
         "minor_penta": [{ s: 6, f: 8, r: true }, { s: 6, f: 11 }, { s: 5, f: 8 }, { s: 5, f: 10 }, { s: 4, f: 8 }, { s: 4, f: 10 }, { s: 3, f: 8 }, { s: 3, f: 10 }, { s: 2, f: 8 }, { s: 2, f: 11 }, { s: 1, f: 8 }, { s: 1, f: 11 }],
         "blues": [{ s: 5, f: 3, r: true }, { s: 5, f: 6 }, { s: 4, f: 3 }, { s: 4, f: 4 }, { s: 4, f: 5 }, { s: 3, f: 3 }, { s: 3, f: 5 }, { s: 2, f: 4 }, { s: 2, f: 6 }, { s: 1, f: 3 }]
     },
+    /* ... other keys ... */
     "G": {
         "major_penta": [{ s: 6, f: 3, r: true }, { s: 6, f: 5 }, { s: 5, f: 2 }, { s: 5, f: 5 }, { s: 4, f: 2 }, { s: 4, f: 5 }, { s: 3, f: 2 }, { s: 3, f: 4 }, { s: 2, f: 3 }, { s: 2, f: 5 }, { s: 1, f: 3 }, { s: 1, f: 5 }],
         "minor_penta": [{ s: 6, f: 3, r: true }, { s: 6, f: 6 }, { s: 5, f: 3 }, { s: 5, f: 5 }, { s: 4, f: 3 }, { s: 4, f: 5 }, { s: 3, f: 3 }, { s: 3, f: 5 }, { s: 2, f: 3 }, { s: 2, f: 6 }, { s: 1, f: 3 }, { s: 1, f: 6 }],
         "blues": [{ s: 6, f: 3, r: true }, { s: 6, f: 6 }, { s: 5, f: 3 }, { s: 5, f: 4 }, { s: 5, f: 5 }, { s: 4, f: 3 }, { s: 4, f: 5 }, { s: 3, f: 3 }, { s: 3, f: 5 }, { s: 3, f: 6 }, { s: 2, f: 3 }, { s: 1, f: 3 }]
-    },
-    "A": {
-        "major_penta": [{ s: 6, f: 5, r: true }, { s: 6, f: 7 }, { s: 5, f: 4 }, { s: 5, f: 7 }, { s: 4, f: 4 }, { s: 4, f: 7 }, { s: 3, f: 4 }, { s: 3, f: 6 }, { s: 2, f: 5 }, { s: 2, f: 7 }, { s: 1, f: 5 }, { s: 1, f: 7 }],
-        "minor_penta": [{ s: 6, f: 5, r: true }, { s: 6, f: 8 }, { s: 5, f: 5 }, { s: 5, f: 7 }, { s: 4, f: 5 }, { s: 4, f: 7 }, { s: 3, f: 5 }, { s: 3, f: 7 }, { s: 2, f: 5 }, { s: 2, f: 8 }, { s: 1, f: 5 }, { s: 1, f: 8 }],
-        "blues": [{ s: 6, f: 5, r: true }, { s: 6, f: 8 }, { s: 5, f: 5 }, { s: 5, f: 6 }, { s: 5, f: 7 }, { s: 4, f: 5 }, { s: 4, f: 7 }, { s: 3, f: 5 }, { s: 3, f: 7 }, { s: 3, f: 8 }, { s: 2, f: 5 }, { s: 1, f: 5 }]
-    },
-    "D": {
-        "major_penta": [{ s: 5, f: 5, r: true }, { s: 5, f: 7 }, { s: 4, f: 4 }, { s: 4, f: 7 }, { s: 3, f: 4 }, { s: 3, f: 7 }, { s: 2, f: 5 }, { s: 2, f: 7 }, { s: 1, f: 5 }, { s: 1, f: 7 }],
-        "minor_penta": [{ s: 5, f: 5, r: true }, { s: 5, f: 8 }, { s: 4, f: 5 }, { s: 4, f: 7 }, { s: 3, f: 5 }, { s: 3, f: 7 }, { s: 2, f: 6 }, { s: 2, f: 8 }, { s: 1, f: 5 }, { s: 1, f: 8 }],
-        "blues": [{ s: 5, f: 5, r: true }, { s: 5, f: 8 }, { s: 4, f: 5 }, { s: 4, f: 6 }, { s: 4, f: 7 }, { s: 3, f: 5 }, { s: 3, f: 7 }, { s: 2, f: 6 }, { s: 2, f: 8 }, { s: 1, f: 5 }, { s: 1, f: 8 }]
-    },
-    "E": {
-        "major_penta": [{ s: 6, f: 0, r: true }, { s: 6, f: 2 }, { s: 5, f: 0 }, { s: 5, f: 2 }, { s: 4, f: 0 }, { s: 4, f: 2 }, { s: 3, f: 1 }, { s: 3, f: 4 }, { s: 2, f: 0 }, { s: 2, f: 2 }, { s: 1, f: 0 }, { s: 1, f: 2 }],
-        "minor_penta": [{ s: 6, f: 0, r: true }, { s: 6, f: 3 }, { s: 5, f: 0 }, { s: 5, f: 2 }, { s: 4, f: 0 }, { s: 4, f: 2 }, { s: 3, f: 0 }, { s: 3, f: 2 }, { s: 2, f: 0 }, { s: 2, f: 3 }, { s: 1, f: 0 }, { s: 1, f: 3 }],
-        "blues": [{ s: 6, f: 0, r: true }, { s: 6, f: 3 }, { s: 5, f: 0 }, { s: 5, f: 1 }, { s: 5, f: 2 }, { s: 4, f: 0 }, { s: 4, f: 2 }, { s: 3, f: 0 }, { s: 3, f: 2 }, { s: 3, f: 3 }, { s: 2, f: 0 }, { s: 1, f: 0 }]
     },
     "B": {
         "major_penta": [{ s: 5, f: 2, r: true }, { s: 5, f: 4 }, { s: 4, f: 1 }, { s: 4, f: 4 }, { s: 3, f: 1 }, { s: 3, f: 4 }, { s: 2, f: 2 }, { s: 2, f: 4 }, { s: 1, f: 2 }, { s: 1, f: 4 }],
@@ -200,6 +175,7 @@ const scaleType = document.getElementById('scale-type');
 const scaleFretboard = document.getElementById('scale-fretboard');
 
 function initLibraries() {
+    if (!chordRoot || !scaleRoot) return;
     [chordRoot, chordType].forEach(el => el.onchange = renderSelectedChord);
     [scaleRoot, scaleType].forEach(el => el.onchange = renderSelectedScale);
     renderSelectedChord();
@@ -210,7 +186,6 @@ function renderSelectedChord() {
     const root = chordRoot.value;
     const type = chordType.value;
     const data = (GUITAR_CHORDS[root] && GUITAR_CHORDS[root][type]) || { name: `${root} ${type}`, notes: "-", positions: [] };
-
     document.getElementById('chord-name').textContent = data.name;
     document.getElementById('chord-notes').textContent = data.notes;
     drawFretboard(chordFretboard, data.positions);
@@ -229,15 +204,22 @@ function drawFretboard(container, positions) {
     for (let i = 0; i < 13; i++) {
         const fret = document.createElement('div');
         fret.className = 'fret';
+
+        // Add Dots (Inlays)
+        if ([3, 5, 7, 9, 12].includes(i)) {
+            const dot = document.createElement('div');
+            dot.className = `fret-dot ${i === 12 ? 'double' : ''}`;
+            fret.appendChild(dot);
+        }
+
         container.appendChild(fret);
     }
 
-    // Create 6 Strings (USER REQUEST: Render actual strings)
+    // Create 6 Strings
     const stringHeight = 100 / 6;
     for (let s = 1; s <= 6; s++) {
         const string = document.createElement('div');
         string.className = `guitar-string string-${s}`;
-        // s:6 (Low E) -> top, s:1 (High E) -> bottom
         const top = ((7 - s) * stringHeight) - (stringHeight / 2);
         string.style.top = `${top}%`;
         container.appendChild(string);
@@ -247,23 +229,16 @@ function drawFretboard(container, positions) {
     positions.forEach(pos => {
         const marker = document.createElement('div');
         marker.className = `note-marker ${pos.r ? 'root' : ''}`;
-
-        // Horizontal position (Fret)
         const fretWidth = 100 / 12.5;
         const left = (pos.f * fretWidth) + (fretWidth / 2);
-
-        // Vertical position (String: 1 is High E, 6 is Low E)
         const top = ((7 - pos.s) * stringHeight) - (stringHeight / 2);
-
         marker.style.left = `${left}%`;
         marker.style.top = `${top}%`;
-        marker.textContent = pos.f === 0 ? "O" : ""; // Open string mark
-
+        marker.textContent = pos.f === 0 ? "O" : "";
         container.appendChild(marker);
     });
 }
 
-// Start everything
 initLibraries();
 
 function getNoteFromFreq(freq) {

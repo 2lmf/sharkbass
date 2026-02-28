@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SharkTuner | Professional Guitar Tools</title>
-    <link rel="stylesheet" href="style.css?v=2.2">
+    <link rel="stylesheet" href="style.css?v=2.3">
     <link rel="manifest" href="manifest.json?v=1.0">
     <meta name="theme-color" content="#0a0a0c">
 
@@ -55,70 +55,74 @@
             </div>
         </section>
 
-        <!-- View: Chords -->
-        <section id="view-chords" class="view">
-            <div class="library-container">
-                <div class="library-controls">
-                    <select id="chord-root" class="retro-select">
-                        <option value="C">C</option>
-                        <option value="C#">C#</option>
-                        <option value="D">D</option>
-                        <option value="D#">D#</option>
-                        <option value="E">E</option>
-                        <option value="F">F</option>
-                        <option value="F#">F#</option>
-                        <option value="G">G</option>
-                        <option value="G#">G#</option>
-                        <option value="A">A</option>
-                        <option value="A#">A#</option>
-                        <option value="B">B</option>
-                    </select>
-                    <select id="chord-type" class="retro-select">
-                        <option value="major">DUR (Major)</option>
-                        <option value="minor">MOL (Minor)</option>
-                        <option value="7">7 (Dominant)</option>
-                        <option value="maj7">maj7</option>
-                        <option value="m7">m7</option>
-                    </select>
-                </div>
+        <!-- View: Library (Dashboard) -->
+        <section id="view-library" class="view">
+            <div class="dashboard-container">
 
-                <div class="fretboard-card">
-                    <div id="chord-fretboard" class="fretboard">
-                        <!-- Rendered by JS -->
+                <!-- Section: Chords -->
+                <div class="dashboard-section">
+                    <div class="section-header">
+                        <h2>🎸 AKORDI (Chords)</h2>
+                        <div class="library-controls mini">
+                            <select id="chord-root" class="retro-select">
+                                <option value="C">C</option>
+                                <option value="C#">C#</option>
+                                <option value="D">D</option>
+                                <option value="D#">D#</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="F#">F#</option>
+                                <option value="G">G</option>
+                                <option value="G#">G#</option>
+                                <option value="A">A</option>
+                                <option value="A#">A#</option>
+                                <option value="B">B</option>
+                            </select>
+                            <select id="chord-type" class="retro-select">
+                                <option value="major">DUR</option>
+                                <option value="minor">MOL</option>
+                                <option value="7">7</option>
+                                <option value="maj7">maj7</option>
+                                <option value="m7">m7</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="fretboard-card">
+                        <div id="chord-fretboard" class="fretboard"></div>
+                    </div>
+                    <div class="chord-info">
+                        <h3 id="chord-name">C Dur</h3>
+                        <p id="chord-notes">C E G</p>
                     </div>
                 </div>
 
-                <div class="chord-info">
-                    <h3 id="chord-name">C Major</h3>
-                    <p id="chord-notes">C E G</p>
-                </div>
-            </div>
-        </section>
+                <div class="divider"></div>
 
-        <!-- View: Scales -->
-        <section id="view-scales" class="view">
-            <div class="library-container">
-                <div class="library-controls">
-                    <select id="scale-root" class="retro-select">
-                        <option value="C">C</option>
-                        <option value="G">G</option>
-                        <option value="D">D</option>
-                        <option value="A">A</option>
-                        <option value="E">E</option>
-                        <option value="B">B</option>
-                    </select>
-                    <select id="scale-type" class="retro-select">
-                        <option value="major_penta">Pentatonika (Dur)</option>
-                        <option value="minor_penta">Pentatonika (Mol)</option>
-                        <option value="blues">Blues Scale</option>
-                    </select>
-                </div>
-
-                <div class="fretboard-card">
-                    <div id="scale-fretboard" class="fretboard">
-                        <!-- Rendered by JS -->
+                <!-- Section: Scales -->
+                <div class="dashboard-section">
+                    <div class="section-header">
+                        <h2>📐 LJESTVICE (Scales)</h2>
+                        <div class="library-controls mini">
+                            <select id="scale-root" class="retro-select">
+                                <option value="C">C</option>
+                                <option value="G">G</option>
+                                <option value="D">D</option>
+                                <option value="A">A</option>
+                                <option value="E">E</option>
+                                <option value="B">B</option>
+                            </select>
+                            <select id="scale-type" class="retro-select">
+                                <option value="major_penta">Pentatonika (Dur)</option>
+                                <option value="minor_penta">Pentatonika (Mol)</option>
+                                <option value="blues">Blues Scale</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="fretboard-card">
+                        <div id="scale-fretboard" class="fretboard"></div>
                     </div>
                 </div>
+
             </div>
         </section>
     </main>
@@ -128,13 +132,9 @@
             <span class="icon">🎯</span>
             <span class="label">Štimer</span>
         </button>
-        <button class="tab-btn" data-view="chords">
+        <button class="tab-btn" data-view="library">
             <span class="icon">🎸</span>
-            <span class="label">Akordi</span>
-        </button>
-        <button class="tab-btn" data-view="scales">
-            <span class="icon">📐</span>
-            <span class="label">Ljestvice</span>
+            <span class="label">Katalog</span>
         </button>
     </nav>
 
@@ -143,10 +143,10 @@
         import * as pitchy from 'https://esm.sh/pitchy@4';
         window.pitchy = pitchy;
     </script>
-    <script src="app.js?v=2.2"></script>
+    <script src="app.js?v=2.3"></script>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js?v=2.2');
+            navigator.serviceWorker.register('./sw.js?v=2.3');
         }
     </script>
 </body>

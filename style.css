@@ -298,15 +298,92 @@ main {
     text-transform: uppercase;
 }
 
-/* Library & Fretboard Styles */
-.library-container {
+/* Dashboard / Library Layout */
+.dashboard-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 2rem;
-    padding-bottom: 2rem;
+    padding: 1rem;
+    width: 100%;
 }
 
+.dashboard-section {
+    width: 100%;
+    animation: slideUp 0.5s ease-out;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+}
+
+.section-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+}
+
+.library-controls.mini {
+    max-width: 250px;
+    gap: 0.5rem;
+}
+
+.library-controls.mini .retro-select {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--glass-border), transparent);
+    margin: 1rem 0;
+}
+
+/* Fretboard Inlays (Dots) */
+.fret-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+/* 12th fret double dots */
+.fret-dot.double {
+    background: transparent;
+    box-shadow: none;
+}
+
+.fret-dot.double::before,
+.fret-dot.double::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transform: translateX(-50%);
+}
+
+.fret-dot.double::before {
+    top: -25px;
+}
+
+.fret-dot.double::after {
+    bottom: -25px;
+}
+
+/* Library & Fretboard Styles */
 .library-controls {
     display: flex;
     gap: 1rem;
@@ -330,10 +407,9 @@ main {
 
 .fretboard-card {
     width: 100%;
-    max-width: 800px;
     background: #1a1a1c;
     border-radius: 12px;
-    padding: 20px 10px;
+    padding: 15px 5px;
     border: 1px solid var(--glass-border);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     overflow-x: auto;
@@ -341,10 +417,10 @@ main {
 
 .fretboard {
     position: relative;
-    height: 140px;
+    height: 120px;
+    /* Slimmer for dashboard */
     min-width: 600px;
     background: #4a3728;
-    /* Dark wood */
     border-radius: 4px;
     display: flex;
     overflow: hidden;
@@ -355,20 +431,17 @@ main {
 .fret {
     flex: 1;
     border-right: 2px solid #bdc3c7;
-    /* Silver frets */
     height: 100%;
     position: relative;
 }
 
 .fret:first-child {
-    flex: 0.5;
-    /* Nut width */
+    flex: 0.4;
     background: #2c3e50;
-    /* Nut color */
-    border-right: 8px solid #ecf0f1;
+    border-right: 6px solid #fdfdfd;
 }
 
-/* Guitar Strings Styles */
+/* Strings */
 .guitar-string {
     position: absolute;
     left: 0;
@@ -376,7 +449,7 @@ main {
     background: linear-gradient(to bottom, #eee, #888, #eee);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
     transform: translateY(-50%);
 }
 
@@ -395,7 +468,7 @@ main {
 
 .string-3 {
     height: 2.5px;
-    background: linear-gradient(to bottom, #f1c40f, #d4ac0d, #f1c40f);
+    background: linear-gradient(to bottom, #f1c40f, #d4ac0d, #f1c40f) !important;
     /* Brass G-string */
 }
 
@@ -409,19 +482,19 @@ main {
 
 .note-marker {
     position: absolute;
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     background: var(--accent);
     color: #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 900;
     font-family: 'Orbitron', sans-serif;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 15px var(--accent-glow);
+    box-shadow: 0 0 12px var(--accent-glow);
     z-index: 10;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -430,22 +503,36 @@ main {
     background: #fff;
     color: var(--accent);
     border: 2px solid var(--accent);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 .chord-info {
-    text-align: center;
+    margin-top: 1rem;
+    text-align: right;
+    padding-right: 1rem;
 }
 
 .chord-info h3 {
     font-family: 'Orbitron', sans-serif;
     color: var(--accent);
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
 }
 
 .chord-info p {
     color: var(--text-dim);
+    font-size: 0.8rem;
     letter-spacing: 2px;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Utility */
