@@ -10,7 +10,7 @@ const needleEl = document.getElementById('needle');
 const btnStart = document.getElementById('btn-start-tuner');
 const noteDisplay = document.querySelector('.note-display');
 
-// Tab Navigation
+// Tab Navigation (Restored to 3 tabs)
 const tabs = document.querySelectorAll('.tab-btn');
 const views = document.querySelectorAll('.view');
 
@@ -87,7 +87,7 @@ function updateTuner() {
     requestAnimationFrame(updateTuner);
 }
 
-// --- LIBRARIES DATA ---
+// --- LIBRARIES DATA (UNCHANGED) ---
 const GUITAR_CHORDS = {
     "C": {
         "major": { name: "C Dur", notes: "C E G", positions: [{ s: 5, f: 3, r: true }, { s: 4, f: 2 }, { s: 2, f: 1 }] },
@@ -96,6 +96,7 @@ const GUITAR_CHORDS = {
         "maj7": { name: "Cmaj7", notes: "C E G B", positions: [{ s: 5, f: 3, r: true }, { s: 4, f: 2 }, { s: 3, f: 0 }, { s: 2, f: 0 }] },
         "m7": { name: "Cm7", notes: "C Eb G Bb", positions: [{ s: 5, f: 3, r: true }, { s: 4, f: 5 }, { s: 3, f: 3 }, { s: 2, f: 4 }] }
     },
+    /* ... (rest of the chords database is kept intact) ... */
     "C#": {
         "major": { name: "C# Dur", notes: "C# F G#", positions: [{ s: 5, f: 4, r: true }, { s: 4, f: 6 }, { s: 3, f: 6 }, { s: 2, f: 6 }] },
         "minor": { name: "C# Mol", notes: "C# E G#", positions: [{ s: 5, f: 4, r: true }, { s: 4, f: 6 }, { s: 3, f: 6 }, { s: 2, f: 5 }] }
@@ -153,7 +154,6 @@ const GUITAR_SCALES = {
         "minor_penta": [{ s: 6, f: 8, r: true }, { s: 6, f: 11 }, { s: 5, f: 8 }, { s: 5, f: 10 }, { s: 4, f: 8 }, { s: 4, f: 10 }, { s: 3, f: 8 }, { s: 3, f: 10 }, { s: 2, f: 8 }, { s: 2, f: 11 }, { s: 1, f: 8 }, { s: 1, f: 11 }],
         "blues": [{ s: 5, f: 3, r: true }, { s: 5, f: 6 }, { s: 4, f: 3 }, { s: 4, f: 4 }, { s: 4, f: 5 }, { s: 3, f: 3 }, { s: 3, f: 5 }, { s: 2, f: 4 }, { s: 2, f: 6 }, { s: 1, f: 3 }]
     },
-    /* ... other keys ... */
     "G": {
         "major_penta": [{ s: 6, f: 3, r: true }, { s: 6, f: 5 }, { s: 5, f: 2 }, { s: 5, f: 5 }, { s: 4, f: 2 }, { s: 4, f: 5 }, { s: 3, f: 2 }, { s: 3, f: 4 }, { s: 2, f: 3 }, { s: 2, f: 5 }, { s: 1, f: 3 }, { s: 1, f: 5 }],
         "minor_penta": [{ s: 6, f: 3, r: true }, { s: 6, f: 6 }, { s: 5, f: 3 }, { s: 5, f: 5 }, { s: 4, f: 3 }, { s: 4, f: 5 }, { s: 3, f: 3 }, { s: 3, f: 5 }, { s: 2, f: 3 }, { s: 2, f: 6 }, { s: 1, f: 3 }, { s: 1, f: 6 }],
@@ -163,16 +163,21 @@ const GUITAR_SCALES = {
         "major_penta": [{ s: 5, f: 2, r: true }, { s: 5, f: 4 }, { s: 4, f: 1 }, { s: 4, f: 4 }, { s: 3, f: 1 }, { s: 3, f: 4 }, { s: 2, f: 2 }, { s: 2, f: 4 }, { s: 1, f: 2 }, { s: 1, f: 4 }],
         "minor_penta": [{ s: 6, f: 7, r: true }, { s: 6, f: 10 }, { s: 5, f: 7 }, { s: 5, f: 9 }, { s: 4, f: 7 }, { s: 4, f: 9 }, { s: 3, f: 7 }, { s: 3, f: 9 }, { s: 2, f: 7 }, { s: 2, f: 10 }, { s: 1, f: 7 }, { s: 1, f: 10 }],
         "blues": [{ s: 6, f: 7, r: true }, { s: 6, f: 10 }, { s: 5, f: 7 }, { s: 5, f: 8 }, { s: 5, f: 9 }, { s: 4, f: 7 }, { s: 4, f: 9 }, { s: 3, f: 7 }, { s: 3, f: 9 }, { s: 3, f: 10 }, { s: 2, f: 7 }, { s: 1, f: 7 }]
-    }
+    },
+    "D": { "major_penta": [{ s: 4, f: 0, r: true }, { s: 4, f: 2 }, { s: 3, f: 0 }, { s: 3, f: 2 }, { s: 2, f: 0 }, { s: 2, f: 3 }, { s: 1, f: 0 }, { s: 1, f: 2 }] },
+    "A": { "major_penta": [{ s: 5, f: 0, r: true }, { s: 5, f: 2 }, { s: 4, f: 0 }, { s: 4, f: 2 }, { s: 3, f: 1 }, { s: 3, f: 2 }, { s: 2, f: 0 }, { s: 2, f: 2 }] },
+    "E": { "major_penta": [{ s: 6, f: 0, r: true }, { s: 6, f: 2 }, { s: 5, f: 0 }, { s: 5, f: 2 }, { s: 4, f: 1 }, { s: 4, f: 2 }, { s: 3, f: 1 }] }
 };
 
 const chordRoot = document.getElementById('chord-root');
 const chordType = document.getElementById('chord-type');
-const chordFretboard = document.getElementById('chord-fretboard');
+const chordFretthick = document.getElementById('chord-fretboard-thick');
+const chordFretthin = document.getElementById('chord-fretboard-thin');
 
 const scaleRoot = document.getElementById('scale-root');
 const scaleType = document.getElementById('scale-type');
-const scaleFretboard = document.getElementById('scale-fretboard');
+const scaleFretthick = document.getElementById('scale-fretboard-thick');
+const scaleFretthin = document.getElementById('scale-fretboard-thin');
 
 function initLibraries() {
     if (!chordRoot || !scaleRoot) return;
@@ -188,50 +193,68 @@ function renderSelectedChord() {
     const data = (GUITAR_CHORDS[root] && GUITAR_CHORDS[root][type]) || { name: `${root} ${type}`, notes: "-", positions: [] };
     document.getElementById('chord-name').textContent = data.name;
     document.getElementById('chord-notes').textContent = data.notes;
-    drawFretboard(chordFretboard, data.positions);
+
+    // Draw Both (v2.4)
+    drawFretboard(chordFretthick, data.positions, true);  // Inverted (6th on top)
+    drawFretboard(chordFretthin, data.positions, false); // Standard (1st on top)
 }
 
 function renderSelectedScale() {
     const root = scaleRoot.value;
     const type = scaleType.value;
     const positions = (GUITAR_SCALES[root] && GUITAR_SCALES[root][type]) || [];
-    drawFretboard(scaleFretboard, positions);
+
+    // Draw Both (v2.4)
+    drawFretboard(scaleFretthick, positions, true);  // Inverted (6th on top)
+    drawFretboard(scaleFretthin, positions, false); // Standard (1st on top)
 }
 
-function drawFretboard(container, positions) {
+function drawFretboard(container, positions, invertedStrings) {
     container.innerHTML = "";
     // Create 12 frets
     for (let i = 0; i < 13; i++) {
         const fret = document.createElement('div');
         fret.className = 'fret';
-
-        // Add Dots (Inlays)
         if ([3, 5, 7, 9, 12].includes(i)) {
             const dot = document.createElement('div');
             dot.className = `fret-dot ${i === 12 ? 'double' : ''}`;
             fret.appendChild(dot);
         }
-
         container.appendChild(fret);
     }
 
-    // Create 6 Strings
     const stringHeight = 100 / 6;
     for (let s = 1; s <= 6; s++) {
         const string = document.createElement('div');
-        string.className = `guitar-string string-${s}`;
-        const top = ((7 - s) * stringHeight) - (stringHeight / 2);
+        // s:6 is Low E (thick), s:1 is High E (thin)
+        string.className = `guitar-string string-gauge-${s}`;
+
+        let top;
+        if (invertedStrings) {
+            // 6th (thick) top, 1st (thin) bottom
+            top = ((7 - s) * stringHeight) - (stringHeight / 2);
+        } else {
+            // 1st (thin) top, 6th (thick) bottom
+            top = (s * stringHeight) - (stringHeight / 2);
+        }
+
         string.style.top = `${top}%`;
         container.appendChild(string);
     }
 
-    // Place Markers
     positions.forEach(pos => {
         const marker = document.createElement('div');
         marker.className = `note-marker ${pos.r ? 'root' : ''}`;
         const fretWidth = 100 / 12.5;
         const left = (pos.f * fretWidth) + (fretWidth / 2);
-        const top = ((7 - pos.s) * stringHeight) - (stringHeight / 2);
+
+        let top;
+        if (invertedStrings) {
+            top = ((7 - pos.s) * stringHeight) - (stringHeight / 2);
+        } else {
+            top = (pos.s * stringHeight) - (stringHeight / 2);
+        }
+
         marker.style.left = `${left}%`;
         marker.style.top = `${top}%`;
         marker.textContent = pos.f === 0 ? "O" : "";
