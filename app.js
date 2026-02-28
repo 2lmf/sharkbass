@@ -24,7 +24,23 @@ tabs.forEach(tab => {
     });
 });
 
-async function initTuner() {
+async function toggleTuner() {
+    if (isTuning) {
+        // Stop Tuner
+        if (micStream) {
+            micStream.getTracks().forEach(track => track.stop());
+        }
+        isTuning = false;
+        btnStart.textContent = "POKRENI ŠTIMER";
+        btnStart.style.opacity = "1";
+        btnStart.disabled = false;
+        targetNoteEl.textContent = "--";
+        centsOffsetEl.textContent = "0.0";
+        needleEl.style.transform = "translateX(-50%) rotate(0deg)";
+        return;
+    }
+
+    // Start Tuner
     try {
         if (!audioContext) {
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -45,9 +61,8 @@ async function initTuner() {
         }
 
         isTuning = true;
-        btnStart.textContent = "ŠTIMANJE...";
-        btnStart.style.opacity = "0.5";
-        btnStart.disabled = true;
+        btnStart.textContent = "ZAUSTAVI ŠTIMER";
+        btnStart.style.opacity = "1";
 
         updateTuner();
     } catch (err) {
@@ -56,7 +71,7 @@ async function initTuner() {
     }
 }
 
-btnStart.addEventListener('click', initTuner);
+btnStart.addEventListener('click', toggleTuner);
 
 function updateTuner() {
     if (!isTuning) return;
