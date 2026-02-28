@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sharktuner-v1.5';
+const CACHE_NAME = 'sharktuner-v2.1';
 const ASSETS = [
     './',
     './index.html',
