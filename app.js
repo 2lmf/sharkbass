@@ -81,7 +81,17 @@ startBtn.onclick = async () => {
 
     } catch (err) {
         console.error("Mic Access Error:", err);
-        alert("Mikrofon nije dostupan. Provjeri dozvole.");
+        startBtn.textContent = "GREŠKA: " + err.name;
+        startBtn.style.background = "#e74c3c";
+        startBtn.style.opacity = "1";
+
+        let msg = "Problem s mikrofonom.";
+        if (err.name === 'NotAllowedError') msg = "Pritisnuo si 'Zabrani'. Osvježi i klikni 'Dopusti'.";
+        if (err.name === 'NotFoundError') msg = "Mobitel ne vidi nijedan mikrofon.";
+        if (err.name === 'NotReadableError') msg = "Mikrofon već koristi druga aplikacija (npr. poziv).";
+        if (err.name === 'OverconstrainedError') msg = "Postavke mikrofona nisu podržane na ovom uređaju.";
+
+        alert(msg + " (" + err.name + ")");
     }
 };
 
