@@ -44,19 +44,21 @@ header {
     text-align: center;
 }
 
-h1 {
+h1.retro-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: 6px;
     margin: 0;
-    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
+    /* White part */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-h1 span {
+h1.retro-title span {
     color: var(--accent);
+    /* Orange part */
+    text-shadow: 0 0 20px var(--accent-glow);
 }
 
 /* App Container */
@@ -80,18 +82,23 @@ main {
     transform: translateY(0);
 }
 
-/* Tuner Styles */
+/* Tuner Styles - Retro Analog */
 .tuner-container {
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .note-display {
     text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
 #target-note {
@@ -106,63 +113,102 @@ main {
 
 #cents-offset {
     font-family: 'Orbitron', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--text-dim);
     letter-spacing: 2px;
 }
 
-/* Gauge UI */
+/* Analog Gauge UI */
 .gauge-container {
-    width: 280px;
-    height: 140px;
+    width: 300px;
+    height: 180px;
     position: relative;
+    background: #fdfdfd;
+    /* Creamy paper analog back */
+    border-radius: 150px 150px 10px 10px;
+    border: 8px solid #222;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 
 .gauge-tracks {
-    width: 280px;
-    height: 280px;
-    border: 4px solid var(--glass-border);
+    width: 260px;
+    height: 260px;
+    border: 2px solid #ddd;
     border-radius: 50%;
     position: absolute;
-    top: 0;
+    top: 20px;
+    left: 20px;
 }
 
+/* Ticks for Analog */
+.gauge-tracks::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at center, transparent 65%, #ccc 65.5%, #ccc 66%, transparent 66.5%),
+        linear-gradient(90deg, transparent 49.5%, #444 50%, transparent 50.5%);
+    border-radius: 50%;
+}
+
+/* Centering mark */
 .gauge-tracks::before {
     content: '';
     position: absolute;
-    top: -4px;
+    top: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 4px;
+    width: 3px;
     height: 15px;
-    background: var(--accent);
-    box-shadow: 0 0 10px var(--accent-glow);
+    background: #e74c3c;
+    /* Red center mark */
 }
 
 .needle {
-    width: 2px;
-    height: 120px;
-    background: #fff;
+    width: 3px;
+    height: 130px;
+    background: #222;
+    /* Classic black physical needle */
     position: absolute;
-    bottom: 0;
+    bottom: -10px;
     left: 50%;
     transform-origin: bottom center;
     transform: translateX(-50%) rotate(0deg);
-    transition: transform 0.1s;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    transition: transform 0.05s ease-out;
+    z-index: 5;
+    border-radius: 2px;
 }
 
 .center-dot {
-    width: 12px;
-    height: 12px;
-    background: var(--accent);
+    width: 24px;
+    height: 24px;
+    background: #333;
+    border: 3px solid #666;
     border-radius: 50%;
     position: absolute;
-    bottom: -6px;
+    bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
-    box-shadow: 0 0 10px var(--accent-glow);
+    z-index: 6;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Scale markings text */
+.gauge-container::before {
+    content: '-50   0   +50';
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    color: #888;
+    letter-spacing: 50px;
+    padding-left: 25px;
 }
 
 /* Buttons */
