@@ -56,19 +56,70 @@
             </div>
         </section>
 
-        <!-- View: Chords (Placeholder) -->
+        <!-- View: Chords -->
         <section id="view-chords" class="view">
-            <div class="section-header">
-                <h2>Akordi</h2>
-                <p>Uskoro: Interaktivna knjižnica akorda</p>
+            <div class="library-container">
+                <div class="library-controls">
+                    <select id="chord-root" class="retro-select">
+                        <option value="C">C</option>
+                        <option value="C#">C#</option>
+                        <option value="D">D</option>
+                        <option value="D#">D#</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="F#">F#</option>
+                        <option value="G">G</option>
+                        <option value="G#">G#</option>
+                        <option value="A">A</option>
+                        <option value="A#">A#</option>
+                        <option value="B">B</option>
+                    </select>
+                    <select id="chord-type" class="retro-select">
+                        <option value="major">DUR (Major)</option>
+                        <option value="minor">MOL (Minor)</option>
+                        <option value="7">7 (Dominant)</option>
+                        <option value="maj7">maj7</option>
+                        <option value="m7">m7</option>
+                    </select>
+                </div>
+
+                <div class="fretboard-card">
+                    <div id="chord-fretboard" class="fretboard">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <div class="chord-info">
+                    <h3 id="chord-name">C Major</h3>
+                    <p id="chord-notes">C E G</p>
+                </div>
             </div>
         </section>
 
-        <!-- View: Scales (Placeholder) -->
+        <!-- View: Scales -->
         <section id="view-scales" class="view">
-            <div class="section-header">
-                <h2>Ljestvice</h2>
-                <p>Uskoro: Vizualni vodič kroz ljestvice</p>
+            <div class="library-container">
+                <div class="library-controls">
+                    <select id="scale-root" class="retro-select">
+                        <option value="C">C</option>
+                        <option value="G">G</option>
+                        <option value="D">D</option>
+                        <option value="A">A</option>
+                        <option value="E">E</option>
+                        <option value="B">B</option>
+                    </select>
+                    <select id="scale-type" class="retro-select">
+                        <option value="major_penta">Pentatonika (Dur)</option>
+                        <option value="minor_penta">Pentatonika (Mol)</option>
+                        <option value="blues">Blues Scale</option>
+                    </select>
+                </div>
+
+                <div class="fretboard-card">
+                    <div id="scale-fretboard" class="fretboard">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
             </div>
         </section>
     </main>

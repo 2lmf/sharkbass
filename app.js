@@ -154,9 +154,113 @@ function updateTuner(inputBuffer) {
     requestAnimationFrame(() => updateTuner(inputBuffer));
 }
 
+// --- V2.0 LIBRARIES: CHORDS & SCALES ---
+
+const GUITAR_CHORDS = {
+    "C": {
+        "major": { name: "C Dur", notes: "C E G", positions: [{ s: 5, f: 3, r: true }, { s: 4, f: 2 }, { s: 2, f: 1 }] },
+        "minor": { name: "C Mol", notes: "C Eb G", positions: [{ s: 5, f: 3, r: true }, { s: 4, f: 5 }, { s: 3, f: 5 }, { s: 2, f: 4 }] },
+        "7": { name: "C7", notes: "C E G Bb", positions: [{ s: 5, f: 3, r: true }, { s: 4, f: 2 }, { s: 3, f: 3 }, { s: 2, f: 1 }] }
+    },
+    "D": {
+        "major": { name: "D Dur", notes: "D F# A", positions: [{ s: 4, f: 0, r: true }, { s: 3, f: 2 }, { s: 2, f: 3 }, { s: 1, f: 2 }] },
+        "minor": { name: "D Mol", notes: "D F A", positions: [{ s: 4, f: 0, r: true }, { s: 3, f: 2 }, { s: 2, f: 3 }, { s: 1, f: 1 }] }
+    },
+    "E": {
+        "major": { name: "E Dur", notes: "E G# B", positions: [{ s: 6, f: 0, r: true }, { s: 5, f: 2 }, { s: 4, f: 2 }, { s: 3, f: 1 }] },
+        "minor": { name: "E Mol", notes: "E G B", positions: [{ s: 6, f: 0, r: true }, { s: 5, f: 2 }, { s: 4, f: 2 }] }
+    },
+    "G": {
+        "major": { name: "G Dur", notes: "G B D", positions: [{ s: 6, f: 3, r: true }, { s: 5, f: 2 }, { s: 1, f: 3 }] }
+    },
+    "A": {
+        "major": { name: "A Dur", notes: "A C# E", positions: [{ s: 5, f: 0, r: true }, { s: 4, f: 2 }, { s: 3, f: 2 }, { s: 2, f: 2 }] },
+        "minor": { name: "A Mol", notes: "A C E", positions: [{ s: 5, f: 0, r: true }, { s: 4, f: 2 }, { s: 3, f: 2 }, { s: 2, f: 1 }] }
+    }
+};
+
+const chordRoot = document.getElementById('chord-root');
+const chordType = document.getElementById('chord-type');
+const chordFretboard = document.getElementById('chord-fretboard');
+
+// --- SCALES DATABASE ---
+const GUITAR_SCALES = {
+    "C": {
+        "major_penta": [{ s: 5, f: 3, r: true }, { s: 5, f: 5 }, { s: 4, f: 2 }, { s: 4, f: 5 }, { s: 3, f: 2 }, { s: 3, f: 5 }, { s: 2, f: 3 }, { s: 2, f: 5 }, { s: 1, f: 3 }, { s: 1, f: 5 }]
+    },
+    "G": {
+        "major_penta": [{ s: 6, f: 3, r: true }, { s: 6, f: 5 }, { s: 5, f: 2 }, { s: 5, f: 5 }, { s: 4, f: 2 }, { s: 4, f: 5 }, { s: 3, f: 2 }, { s: 3, f: 4 }, { s: 2, f: 3 }, { s: 2, f: 5 }, { s: 1, f: 3 }, { s: 1, f: 5 }]
+    },
+    "A": {
+        "minor_penta": [{ s: 6, f: 5, r: true }, { s: 6, f: 8 }, { s: 5, f: 5 }, { s: 5, f: 7 }, { s: 4, f: 5 }, { s: 4, f: 7 }, { s: 3, f: 5 }, { s: 3, f: 7 }, { s: 2, f: 5 }, { s: 2, f: 8 }, { s: 1, f: 5 }, { s: 1, f: 8 }]
+    }
+};
+
+const scaleRoot = document.getElementById('scale-root');
+const scaleType = document.getElementById('scale-type');
+const scaleFretboard = document.getElementById('scale-fretboard');
+
+function initLibraries() {
+    [chordRoot, chordType].forEach(el => el.onchange = renderSelectedChord);
+    [scaleRoot, scaleType].forEach(el => el.onchange = renderSelectedScale);
+    renderSelectedChord();
+    renderSelectedScale();
+}
+
+function renderSelectedScale() {
+    const root = scaleRoot.value;
+    const type = scaleType.value;
+    const positions = (GUITAR_SCALES[root] && GUITAR_SCALES[root][type]) || [];
+    drawFretboard(scaleFretboard, positions);
+}
+
+function renderSelectedChord() {
+    const root = chordRoot.value;
+    const type = chordType.value;
+    const data = (GUITAR_CHORDS[root] && GUITAR_CHORDS[root][type]) || { name: `${root} ${type}`, notes: "-", positions: [] };
+
+    document.getElementById('chord-name').textContent = data.name;
+    document.getElementById('chord-notes').textContent = data.notes;
+    drawFretboard(chordFretboard, data.positions);
+}
+
+function drawFretboard(container, positions) {
+    container.innerHTML = "";
+    // Create 12 frets
+    for (let i = 0; i < 13; i++) {
+        const fret = document.createElement('div');
+        fret.className = 'fret';
+        container.appendChild(fret);
+    }
+
+    // Place Markers
+    positions.forEach(pos => {
+        const marker = document.createElement('div');
+        marker.className = `note-marker ${pos.r ? 'root' : ''}`;
+
+        // Horizontal position (Fret)
+        const fretWidth = 100 / 12.5;
+        const left = (pos.f * fretWidth) + (fretWidth / 2);
+
+        // Vertical position (String: 1 is top/high E, 6 is bottom/low E)
+        const stringHeight = 100 / 6;
+        const top = (pos.s * stringHeight) - (stringHeight / 2);
+
+        marker.style.left = `${left}%`;
+        marker.style.top = `${top}%`;
+        marker.textContent = pos.f === 0 ? "O" : ""; // Open string mark
+
+        container.appendChild(marker);
+    });
+}
+
+// Start everything
+initLibraries();
+
 function getNoteFromFreq(freq) {
     const semitones = 12 * (Math.log2(freq / 440));
     const noteNum = Math.round(semitones) + 69;
+    if (noteNum < 0) return { name: "--", cents: 0 };
     const name = NOTE_NAMES[noteNum % 12];
     const cents = (semitones - Math.round(semitones)) * 100;
     return { name, cents };
