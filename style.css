@@ -118,97 +118,77 @@ main {
     letter-spacing: 2px;
 }
 
-/* Analog Gauge UI */
-.gauge-container {
-    width: 300px;
-    height: 180px;
-    position: relative;
+/* Horizontal Analog Gauge UI */
+.gauge-container.rectangular {
+    width: 320px;
+    height: 120px;
     background: #fdfdfd;
-    /* Creamy paper analog back */
-    border-radius: 150px 150px 10px 10px;
-    border: 8px solid #222;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.2);
+    border: 6px solid #222;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 0, 0, 0.1);
+    position: relative;
     overflow: hidden;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
-.gauge-tracks {
-    width: 260px;
-    height: 260px;
-    border: 2px solid #ddd;
-    border-radius: 50%;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
-
-/* Ticks for Analog */
-.gauge-tracks::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image:
-        radial-gradient(circle at center, transparent 65%, #ccc 65.5%, #ccc 66%, transparent 66.5%),
-        linear-gradient(90deg, transparent 49.5%, #444 50%, transparent 50.5%);
-    border-radius: 50%;
-}
-
-/* Centering mark */
-.gauge-tracks::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 3px;
-    height: 15px;
-    background: #e74c3c;
-    /* Red center mark */
-}
-
-.needle {
-    width: 3px;
-    height: 130px;
-    background: #222;
-    /* Classic black physical needle */
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform-origin: bottom center;
-    transform: translateX(-50%) rotate(0deg);
-    transition: transform 0.05s ease-out;
-    z-index: 5;
-    border-radius: 2px;
-}
-
-.center-dot {
-    width: 24px;
-    height: 24px;
-    background: #333;
-    border: 3px solid #666;
-    border-radius: 50%;
-    position: absolute;
-    bottom: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 6;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-/* Scale markings text */
-.gauge-container::before {
-    content: '-50   0   +50';
+.gauge-scale {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    color: #888;
     position: absolute;
     top: 15px;
     width: 100%;
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.6rem;
-    color: #888;
-    letter-spacing: 50px;
-    padding-left: 25px;
+    left: 0;
+}
+
+.gauge-tracks {
+    width: 100%;
+    height: 2px;
+    background: #eee;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Red Center Mark */
+.gauge-tracks::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -5px;
+    width: 2px;
+    height: 12px;
+    background: #e74c3c;
+    transform: translateX(-50%);
+}
+
+.needle {
+    width: 2px;
+    height: 90px;
+    background: #222;
+    position: absolute;
+    bottom: -10px;
+    /* Pivoted from below screen for horizontal swing effect */
+    left: 50%;
+    transform-origin: center 100px;
+    transform: translateX(-50%) rotate(0deg);
+    transition: transform 0.05s ease-out;
+    z-index: 5;
+}
+
+.tuner-container::after {
+    /* Shadow below the gauge for depth */
+    content: '';
+    width: 280px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    filter: blur(10px);
+    margin-top: -10px;
 }
 
 /* Buttons */
