@@ -232,6 +232,17 @@ function drawFretboard(container, positions) {
         container.appendChild(fret);
     }
 
+    // Create 6 Strings (USER REQUEST: Render actual strings)
+    const stringHeight = 100 / 6;
+    for (let s = 1; s <= 6; s++) {
+        const string = document.createElement('div');
+        string.className = `guitar-string string-${s}`;
+        // s:6 (Low E) -> top, s:1 (High E) -> bottom
+        const top = ((7 - s) * stringHeight) - (stringHeight / 2);
+        string.style.top = `${top}%`;
+        container.appendChild(string);
+    }
+
     // Place Markers
     positions.forEach(pos => {
         const marker = document.createElement('div');
@@ -242,8 +253,6 @@ function drawFretboard(container, positions) {
         const left = (pos.f * fretWidth) + (fretWidth / 2);
 
         // Vertical position (String: 1 is High E, 6 is Low E)
-        // USER REQUEST: Reverse order (6th string on TOP)
-        const stringHeight = 100 / 6;
         const top = ((7 - pos.s) * stringHeight) - (stringHeight / 2);
 
         marker.style.left = `${left}%`;
