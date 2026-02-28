@@ -51,6 +51,7 @@
 
                 <div class="tuner-actions">
                     <button id="btn-start-tuner" class="btn-primary">POKRENI ŠTIMER</button>
+                    <div id="debug-log" class="debug-log"></div>
                 </div>
             </div>
         </section>
@@ -87,8 +88,12 @@
         </button>
     </nav>
 
-    <script src="https://esm.sh/pitchy@4"></script>
-    <script src="app.js?v=1.0"></script>
+    <!-- Pitchy Library Fix -->
+    <script type="module">
+        import * as pitchy from 'https://esm.sh/pitchy@4';
+        window.pitchy = pitchy;
+    </script>
+    <script src="app.js?v=1.5"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js?v=1.0');

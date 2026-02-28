@@ -177,6 +177,17 @@ main {
     left: 50%;
     transform-origin: center 100px;
     transform: translateX(-50%) rotate(0deg);
+
+    .debug-log {
+        margin-top: 1rem;
+        font-size: 0.7rem;
+        color: #666;
+        font-family: monospace;
+        max-width: 250px;
+        text-align: center;
+        line-height: 1.4;
+    }
+
     transition: transform 0.05s ease-out;
     z-index: 5;
 }

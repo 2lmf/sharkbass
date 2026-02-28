@@ -32,28 +32,40 @@ const noteDisplay = document.getElementById('target-note');
 const centsDisplay = document.getElementById('cents-offset');
 const needle = document.getElementById('needle');
 const startBtn = document.getElementById('btn-start-tuner');
+const debugLog = document.getElementById('debug-log');
+
+function log(msg) {
+    console.log(msg);
+    if (debugLog) debugLog.innerHTML += `> ${msg}<br>`;
+}
 
 const NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
 // 3. Start Tuner
 startBtn.onclick = async () => {
     try {
+        log("Inicijalizacija...");
+
         // Essential for Mobile: AudioContext MUST be created/resumed inside a click event
         if (!audioContext) {
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            log("Audio sustav kreiran.");
         }
 
         if (audioContext.state === 'suspended') {
             await audioContext.resume();
+            log("Audio sustav probuđen.");
         }
 
         // If already listening, this button acts as a reset
         if (micStream) {
+            log("Resetiranje...");
             location.reload();
             return;
         }
 
         startBtn.textContent = "TRAŽIM DOZVOLU...";
+        log("Tražim mikrofon...");
 
         // Request microphone access
         micStream = await navigator.mediaDevices.getUserMedia({
@@ -63,6 +75,7 @@ startBtn.onclick = async () => {
                 autoGainControl: false
             }
         });
+        log("Mikrofon odobren.");
 
         startBtn.textContent = "SLUŠAM...";
         startBtn.style.opacity = "0.5";
@@ -71,8 +84,23 @@ startBtn.onclick = async () => {
         analyser = audioContext.createAnalyser();
         analyser.fftSize = 2048;
         source.connect(analyser);
+        log("Analizator povezan.");
 
-        // Initialize Pitchy (ESM handled via script tag)
+        // Wait for window.pitchy if not ready
+        if (!window.pitchy) {
+            log("Čekam Pitchy biblioteku...");
+            let waitCount = 0;
+            while (!window.pitchy && waitCount < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                waitCount++;
+            }
+        }
+
+        if (!window.pitchy) {
+            throw new Error("Biblioteka 'Pitchy' nije učitana!");
+        }
+
+        log("Pitchy spreman. Analiza započela.");
         const PitchDetector = window.pitchy.PitchDetector;
         pitchDetector = PitchDetector.forFloat32Array(analyser.fftSize);
         const inputBuffer = new Float32Array(pitchDetector.inputLength);
@@ -80,6 +108,7 @@ startBtn.onclick = async () => {
         updateTuner(inputBuffer);
 
     } catch (err) {
+        log("POGREŠKA: " + err.name);
         console.error("Mic Access Error:", err);
         startBtn.textContent = "GREŠKA: " + err.name;
         startBtn.style.background = "#e74c3c";
