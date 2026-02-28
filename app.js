@@ -226,10 +226,16 @@ function renderSelectedScale() {
 
 function drawFretboard(container, positions, invertedStrings) {
     container.innerHTML = "";
+    // Visual Scale (Nut is 0.4 units, Frets are 1.0 unit each)
+    const nutWidth = 0.4;
+    const totalUnits = nutWidth + 12;
+    const unitWidth = 100 / totalUnits;
+
     // Create 12 frets
     for (let i = 0; i < 13; i++) {
         const fret = document.createElement('div');
         fret.className = 'fret';
+        if (i === 0) fret.style.flex = nutWidth;
         if ([3, 5, 7, 9, 12].includes(i)) {
             const dot = document.createElement('div');
             dot.className = `fret-dot ${i === 12 ? 'double' : ''}`;
@@ -241,15 +247,12 @@ function drawFretboard(container, positions, invertedStrings) {
     const stringHeight = 100 / 6;
     for (let s = 1; s <= 6; s++) {
         const string = document.createElement('div');
-        // s:6 is Low E (thick), s:1 is High E (thin)
         string.className = `guitar-string string-gauge-${s}`;
 
         let top;
         if (invertedStrings) {
-            // 6th (thick) top, 1st (thin) bottom
             top = ((7 - s) * stringHeight) - (stringHeight / 2);
         } else {
-            // 1st (thin) top, 6th (thick) bottom
             top = (s * stringHeight) - (stringHeight / 2);
         }
 
@@ -260,8 +263,16 @@ function drawFretboard(container, positions, invertedStrings) {
     positions.forEach(pos => {
         const marker = document.createElement('div');
         marker.className = `note-marker ${pos.r ? 'root' : ''}`;
-        const fretWidth = 100 / 12.5;
-        const left = (pos.f * fretWidth) + (fretWidth / 2);
+
+        // Exact Positioning: center in the "field" (between metal frets)
+        let left;
+        if (pos.f === 0) {
+            // Center on nut
+            left = (nutWidth * unitWidth) / 2;
+        } else {
+            // Nut + (Full frets before) + half of current fret
+            left = (nutWidth * unitWidth) + ((pos.f - 1) * unitWidth) + (unitWidth / 2);
+        }
 
         let top;
         if (invertedStrings) {
@@ -272,7 +283,12 @@ function drawFretboard(container, positions, invertedStrings) {
 
         marker.style.left = `${left}%`;
         marker.style.top = `${top}%`;
-        marker.textContent = pos.f === 0 ? "O" : "";
+
+        // Add Note Name (Standard EADGBE)
+        const stringBaseNotes = { 1: 4, 2: 11, 3: 7, 4: 2, 5: 9, 6: 4 }; // E, B, G, D, A, E
+        const noteIndex = (stringBaseNotes[pos.s] + pos.f) % 12;
+        marker.textContent = NOTE_NAMES[noteIndex];
+
         container.appendChild(marker);
     });
 }
